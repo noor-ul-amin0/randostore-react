@@ -82,10 +82,10 @@ The Application Runs on **localhost:3000**
 #### URL
 
 The application has just the following urls:
-i. / --> **HomePage** which renders list of available products.
-ii. /sale-items --> **AddProduct** which renders a form of 2 input fields for name and price of the product.
-iii. /checkout --> **Checkout** which renders cart items.
-iv. /search-items --> **SearchItems** which renders search items.
+1. / --> **HomePage** which renders list of available products.
+2. /sale-items --> **AddProduct** which renders a form of 2 input fields for name and price of the product.
+3. /checkout --> **Checkout** which renders cart items.
+4. /search-items --> **SearchItems** which renders search items.
 
 ## Resources
 
