@@ -1,35 +1,100 @@
-Productbox Frontend Code Challenge
-==================================
+# RANDOSTORE Simple React JS E-Commerce Project 
 
-Hello! Your task is to create RandoStore; an online store where anyone can put up any random item up for sale and anyone else can buy it.
+## What is the use of this Repo
 
-Overview
---------
-I have provided you with a simple [NodeJS](https://nodejs.org) application server for item additions and listing. This app does two things:
+This Project is a Simple ReactJS Project which demonstrates the following
+1. Creating a Component in React
+2. Making HTTP calls
+3. Communicating between parent and child component
+4. Using Bootstrap along with React
+5. Using Basic Routing in React
 
-- Hosts static content from the 'static' directory
-- Serves a JSON REST API for [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on items stored in memory
+The project Template can be used to build bigger projects
 
-I would like you to build four pages:
+## Prerequisites
 
-- A page for listing all items that you can add to your cart
-- A page to view all the items that you've checked out
-- A page that allows you to add new items
-- A homepage that allows you to navigate to the last three pages
+### Install Node JS
+Refer to https://nodejs.org/en/ to install nodejs
 
-I've provided a placeholder for these four pages in the 'static' directory. In addition you need to add a cart to the top of EACH page that shows how many items have been added to cart. Once the cart is clicked it should take you to the checkout page where you can see all the chosen items.
+### Install create-react-app
+Install create-react-app npm package globally. This will help to easily run the project and also build the source files easily. Use the following command to install create-react-app
 
-You have to use one of the Javascript Frameworks at the frontend for this task. If specified in the email which framework to use, please use that instead.
+```bash
+npm install -g create-react-app
+```
 
-In terms of design & layout, that's entirely up to you :). I suggest you use Bootstrap or Skeleton since it's very simple and looks elegant. I would recommend you use whatever you're most comfortable with.
+## Cloning and Running the Application in local
 
-Getting Started
----------------
-Install the package dependencies by running the following command: `npm install`
+Clone the project into local
 
-Once the dependancies are installed, you can start the application server by running: `npm start`
+## Install npm dependencies for node server
+Install all the npm packages. Go into the root of the project folder and type the following command to install all npm packages
 
-Once the server is running, you can access the start page (index.html) by opening your browser to `http://localhost:3000`
+```bash
+npm install
+```
+## Install npm dependencies for react frontend
+Install all the npm packages. Go into the client folder and inside type the following command to install all npm packages
+
+```bash
+npm install
+```
+# Run node server
+In order to run the node server Type the following command from the root of the project
+
+```bash
+npm start
+```
+# Run react app
+In order to run the react app Type the following command from the root of the client directory
+
+```bash
+npm start
+```
+# Node server
+The Application Runs on **localhost:5000**
+
+# React App
+The Application Runs on **localhost:3000**
+
+## React Application design
+
+#### Components
+
+1. **HomePage** Component : This Component renders child component ProductList. This Component gets the data from node server.
+
+2. **ProductList** Component : This Component Displays list products coming from backend. This Component is the Child Component of *HomePage* Component
+
+3. **Header** Component: This Component contains all the Navigation tabs which redirects to the related pages.
+
+4. **Footer** Component: This Component contains footer of the application.
+
+5. **AddProduct** Component: This Component lets the user to Add an item/product for sale.
+
+6. **Checkout** Component: This Component contains all the items/products user added to his/her shopping cart(stores in browser localstorage).
+
+7. **SearchItems** Component: This Component finds items that is being searched by the user and displays them if found otherwise shows unmatched message.
+
+#### HTTP client
+
+**axios** library is used to make HTTP Calls
+
+#### URL
+
+The application has just the following urls:
+i. / --> **HomePage** which renders list of available products.
+ii. /sale-items --> **AddProduct** which renders a form of 2 input fields for name and price of the product.
+iii. /checkout --> **Checkout** which renders cart items.
+iv. /search-items --> **SearchItems** which renders search items.
+
+## Resources
+
+**create-react-app** : The following link has all the commands that can be used with create-react-app
+https://github.com/facebook/create-react-app
+
+**ReactJS** : Refer to https://reactjs.org/ to understand the concepts of ReactJS
+
+**React Bootstrap** : Refer to https://react-bootstrap.github.io/getting-started/introduction/ to understand how to use React Bootstrap
 
 REST API
 --------
@@ -54,44 +119,3 @@ Here is an example of results returned from HTTP GET on /items:
 {"id":4,"name":"Glow Stick Bundle","price":"10","img":"./img/sticks.jpg"},
 {"id":5,"name":"Cookie Jar","price":"25","img":"./img/cookies.jpg"}]
 ```
-
-You must have noticed that from the top endpoints there is no mention of a cart. This is because I want you to implement the cart entirely in the front end. I suggest that you use [browser local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
-
-Requirements
-------------
-At a minimum, there are 5 things I need to see:
-
-- You should be able to add items through the front end application
-- A list of all the items on the items page
-- The checkout page should have all the items that you chose to checkout
-- The number of items in cart is persistant amongst different browser tabs
-- Decent design/layout of content
-- I will be examine your code for readability, architectural decisions, and modularity. This application is a simple one and doesn't require expertise to build, that being said, - - I'll be grading how well you built it not just if you did it. Communication is key, thus if/when you meet with us, be prepared to talk about why and how you built your interfaces.
-
-Design isn't a point I'm concerned about here, so I suggest you just make it usable or just organized and not spend too much time on it.
-
-You should be able to finish this in 4-8 hours, I will give you 5 days to do this. I cannot fairly judge how much time you spent on this project but please don't spend more than 12 hours on this project.
-
-Idea inspiration
-----------------
-If you have additional time after completing the requirements (I think you should), then I'd love to see what else you can do. Here are some ideas to get you started (but please don't limit yourself to these!).
-
-- Add Items form validation
-- Automated testing for example [Protractor](https://www.protractortest.org/)
-- Sorting/Searching of items
-- Optimize assets (minimize and/or bundle css/js)
-- Dynamically load items when they're added to backend (no need to refresh)
-
-To be perfectly clear, I don't expect that anyone could complete all of these. This is simply a list of ideas to inspire you.
-
-Submission
-----------
-Fork this repo or create a new public repo and then send the link to waleed@productbox.dev with the subject title "Frontend Code Challenge"
-
-Questions / Problems / Stuck?
------------------------------
-Email me waleed@productbox.dev
-
-License
--------
-I have licensed this project under the MIT license so that you may use this for a portfolio piece (or anything else!).
