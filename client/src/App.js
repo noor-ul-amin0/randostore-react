@@ -8,6 +8,7 @@ import AddProduct from "./pages/AddProduct";
 import CheckoutPage from "./pages/Checkout";
 import SearchItems from "./pages/SearchItems";
 import "./App.css";
+import { Counter } from "./components/Counter";
 
 const App = () => {
   // States
@@ -50,6 +51,9 @@ const App = () => {
             </Route>
             <Route path="/search-items">
               <SearchItems products={products} addToCart={updateCartItems} />
+            </Route>
+            <Route path="/counter">
+              <Counter />
             </Route>
           </Switch>
         </Router>

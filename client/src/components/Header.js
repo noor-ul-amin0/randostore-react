@@ -6,6 +6,7 @@ const Header = ({ cartItems }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [tabs, setTabs] = useState([
     { id: 0, name: "Home", navigateTo: "/" },
+    { id: 3, name: "Counter", navigateTo: "/counter" },
     { id: 1, name: "Sale-Item", navigateTo: "/sale-items" },
     { id: 2, name: "Checkout", navigateTo: "/checkout" },
   ]);
