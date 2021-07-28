@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
+import {  useDispatch } from 'react-redux'
+import { addItem } from "../redux/features/products/productSlice";
 
-const AddProduct = ({ addProduct }) => {
+const AddProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [error, setError] = useState("");
-  // const [img, setImg] = useState(null);
+  const dispatch = useDispatch()
 
+  
   const isValidForm = () => {
     if (!name && !price) {
       setFormErrors({
@@ -45,7 +48,7 @@ const AddProduct = ({ addProduct }) => {
         price,
       });
       if (data) {
-        addProduct(data);
+        dispatch(addItem(data))
         alert("Item added successfully");
       }
       // setImg(null);

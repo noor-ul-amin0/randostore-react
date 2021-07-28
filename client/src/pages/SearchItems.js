@@ -1,38 +1,20 @@
 import { useHistory } from "react-router";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../redux/features/cart/cartSlice";
+import { emptySearchableProducts } from "../redux/features/products/productSlice";
 
-const SearchItems = ({ products, addToCart }) => {
+const SearchItems = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const {searchableProducts} = useSelector(state=>state.product)
+  const dispatch=useDispatch()
   const history = useHistory();
   // Get Query String from uri
   const { searchTerm } = queryString.parse(history.location.search);
   useEffect(() => {
-    // filter out matched products
-    let filtering = products.filter((product) =>
-      searchTerm.length >= 3
-        ? product.name
-            .toLocaleLowerCase()
-            .includes(searchTerm.toLocaleLowerCase())
-        : product.name.toLocaleLowerCase() === searchTerm.toLocaleLowerCase()
-    );
-    console.log(filtering, searchTerm);
-    setFilteredProducts(filtering);
-  }, [products, searchTerm]);
-  // Add Item to Cart (localStorage)
-  const addItemToCart = (item) => {
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    let find = cartItems.find((cart) => cart.id === item.id);
-    if (find) {
-      cartItems = cartItems.map((cart) =>
-        cart.id === item.id ? { ...cart, quantity: cart.quantity + 1 } : cart
-      );
-    } else {
-      cartItems = [...cartItems, { ...item, quantity: 1 }];
-    }
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    addToCart(cartItems);
-  };
+    setFilteredProducts(searchableProducts);
+  }, [searchableProducts]);
   // Sort Items by Price
   const sortBy = (s) => {
     let sortedResult = [];
@@ -104,7 +86,7 @@ const SearchItems = ({ products, addToCart }) => {
                 </h6>
                 <button
                   type="button"
-                  onClick={() => addItemToCart(product)}
+                  onClick={() => dispatch(addCartItem(product))}
                   className="btn btn-success"
                 >
                   ADD TO CART

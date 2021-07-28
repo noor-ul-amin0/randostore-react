@@ -1,17 +1,17 @@
-const ProductList = ({ products, addToCart }) => {
+import axios from "axios";
+import { useEffect } from "react";
+import {useDispatch,useSelector} from 'react-redux'
+import { addCartItem } from "../redux/features/cart/cartSlice";
+import { getItems } from "../redux/features/products/productSlice";
+const ProductList = () => {
+  const products=useSelector(state=>state.product.items)
+  const disptach=useDispatch()
+  useEffect(()=>{
+     axios.get("http://localhost:5000/items").then(res=>disptach(getItems(res.data))).catch(e=>alert(e))
+  },[disptach])
   // Add Item to Cart (localStorage)
   const addItemToCart = (item) => {
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    let find = cartItems.find((cart) => cart.id === item.id);
-    if (find) {
-      cartItems = cartItems.map((cart) =>
-        cart.id === item.id ? { ...cart, quantity: cart.quantity + 1 } : cart
-      );
-    } else {
-      cartItems = [...cartItems, { ...item, quantity: 1 }];
-    }
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    addToCart(cartItems);
+    disptach(addCartItem(item))
   };
 
   // JSX

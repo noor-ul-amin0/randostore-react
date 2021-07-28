@@ -1,16 +1,9 @@
-const CartItems = ({ cartItems, updateCartItems }) => {
-  const handleClick = (itemId) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    updateCartItems(updatedCartItems);
-  };
-  const handleQty = (itemId, qty) => {
-    const updatedCartItems = cartItems.map((item) =>
-      item.id === itemId ? { ...item, quantity: item.quantity + qty } : item
-    );
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    updateCartItems(updatedCartItems);
-  };
+import { useDispatch } from "react-redux";
+import { updateCartItem  , removeCartItem } from "../redux/features/cart/cartSlice";
+
+const CartItems = ({cartItems}) => {
+  const dispatch=useDispatch();
+
   return (
     <div className="container">
       <table className="table">
@@ -30,7 +23,7 @@ const CartItems = ({ cartItems, updateCartItems }) => {
             <tr key={i}>
               <td className="product_remove">
                 <i
-                  onClick={() => handleClick(cartItem.id)}
+                  onClick={() => dispatch(removeCartItem(cartItem.id))}
                   className="fa fa-trash-o"
                   style={{ cursor: "pointer" }}
                 ></i>
@@ -51,12 +44,12 @@ const CartItems = ({ cartItems, updateCartItems }) => {
               <td>
                 <i
                   style={{ pointerEvents: cartItem.quantity === 1 && "none" }}
-                  onClick={() => handleQty(cartItem.id, -1)}
+                  onClick={() => dispatch(updateCartItem({itemId:cartItem.id,qty:-1}))}
                   className="fa fa-minus"
                 ></i>
                 <span>{cartItem.quantity}</span>
                 <i
-                  onClick={() => handleQty(cartItem.id, 1)}
+                  onClick={() => dispatch(updateCartItem({itemId:cartItem.id,qty:1}))}
                   className="fa fa-plus"
                 ></i>
               </td>

@@ -1,10 +1,8 @@
 import ProductList from "../components/ProductList";
-const HomePage = ({ products, addToCart }) => {
+const HomePage = ({ addToCart }) => {
   return (
-    products.length > 0 && (
-      <ProductList products={products} addToCart={addToCart} />
+      <ProductList  />
     )
-  );
 };
 
 export default HomePage;
