@@ -1,54 +1,51 @@
-import axios from "axios";
-import { useEffect } from "react";
-import {useDispatch,useSelector} from 'react-redux'
-import { addCartItem } from "../redux/features/cart/cartSlice";
-import { getItems } from "../redux/features/products/productSlice";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProductIds } from "../redux/features/products/selectors";
+import { fetchProducts } from "../redux/features/products/thunk";
+import ProductListItem from "./ProductListItem";
 const ProductList = () => {
-  const products=useSelector(state=>state.product.items)
-  const disptach=useDispatch()
-  useEffect(()=>{
-     axios.get("http://localhost:5000/items").then(res=>disptach(getItems(res.data))).catch(e=>alert(e))
-  },[disptach])
-  // Add Item to Cart (localStorage)
-  const addItemToCart = (item) => {
-    disptach(addCartItem(item))
+  const dispatch = useDispatch();
+  const productIds = useSelector(selectProductIds);
+  const { loading } = useSelector((state) => state.product);
+
+  const getProducts = useCallback(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  useEffect(() => {
+    // getProducts();
+    console.log("Productlist mounted.");
+    dispatch(fetchProducts());
+  }, []);
+
+  const Loader = () => {
+    if (loading)
+      return (
+        <div className="text-center">
+          <div
+            className="spinner-border"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
+    else return null;
   };
 
   // JSX
   return (
-    <div className="container mt-5 mb-3">
-      <div className="row row-cols-1 row-cols-md-3 g-4">
-        {products.map((product) => (
-          <div key={product.id} className="col">
-            <div className="card">
-              <img
-                style={{ width: "354px", height: "356px" }}
-                src={
-                  product.img
-                    ? `http://localhost:5000${product.img.replace(".", "")}`
-                    : "http://localhost:5000/img/cookies.jpg"
-                }
-                className="card-img-top"
-                alt={product.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <h6 className="card-text" style={{ color: "goldenrod" }}>
-                  RS: {product.price}
-                </h6>
-                <button
-                  type="button"
-                  onClick={() => addItemToCart(product)}
-                  className="btn btn-success"
-                >
-                  ADD TO CART
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+    <>
+      {Loader()}
+      <div className="container mt-5 mb-3">
+        <div className="row row-cols-1 row-cols-md-3 g-4">
+          {productIds.map((id) => (
+            <ProductListItem id={id} key={id} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

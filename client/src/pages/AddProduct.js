@@ -1,16 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
-import {  useDispatch } from 'react-redux'
-import { addItem } from "../redux/features/products/productSlice";
-
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/features/products/thunk";
+import { toast } from "react-toastify";
 const AddProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [formErrors, setFormErrors] = useState({});
-  const [error, setError] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  
   const isValidForm = () => {
     if (!name && !price) {
       setFormErrors({
@@ -42,27 +39,17 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidForm()) return;
-    try {
-      const { data } = await axios.post("http://localhost:5000/items/", {
-        name,
-        price,
-      });
-      if (data) {
-        dispatch(addItem(data))
-        alert("Item added successfully");
-      }
-      // setImg(null);
-      setName("");
-      setPrice("");
-      setFormErrors({});
-    } catch (error) {
-      setError(error.message);
-    }
+    dispatch(addProduct({ name, price }));
+    toast.success("Product Added !", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+    setName("");
+    setPrice("");
+    setFormErrors({});
   };
 
   return (
     <div className="container">
-      {error && <p className="alert alert-danger">{error}</p>}
       <form
         onSubmit={handleSubmit}
         className="card"

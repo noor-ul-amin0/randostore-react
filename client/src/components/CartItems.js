@@ -1,8 +1,11 @@
 import { useDispatch } from "react-redux";
-import { updateCartItem  , removeCartItem } from "../redux/features/cart/cartSlice";
+import {
+  updateCartItem,
+  removeCartItem,
+} from "../redux/features/cart/cartSlice";
 
-const CartItems = ({cartItems}) => {
-  const dispatch=useDispatch();
+const CartItems = ({ cartItems }) => {
+  const dispatch = useDispatch();
 
   return (
     <div className="container">
@@ -44,12 +47,16 @@ const CartItems = ({cartItems}) => {
               <td>
                 <i
                   style={{ pointerEvents: cartItem.quantity === 1 && "none" }}
-                  onClick={() => dispatch(updateCartItem({itemId:cartItem.id,qty:-1}))}
+                  onClick={() =>
+                    dispatch(updateCartItem({ itemId: cartItem.id, qty: -1 }))
+                  }
                   className="fa fa-minus"
                 ></i>
                 <span>{cartItem.quantity}</span>
                 <i
-                  onClick={() => dispatch(updateCartItem({itemId:cartItem.id,qty:1}))}
+                  onClick={() =>
+                    dispatch(updateCartItem({ itemId: cartItem.id, qty: 1 }))
+                  }
                   className="fa fa-plus"
                 ></i>
               </td>

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
 import CartItems from "../components/CartItems";
 import "./Checkout.css";
 const CheckoutPage = () => {
-  const cartItems = useSelector(state=>state.cart.cartItems)
+  const cartItems = useSelector((state) => state.cart.cartItems);
   return (
     <>
       <center className="p-3">
@@ -20,7 +20,7 @@ const CheckoutPage = () => {
           </Link>
         </div>
       ) : (
-        <CartItems  cartItems={cartItems}/>
+        <CartItems cartItems={cartItems} />
       )}
     </>
   );

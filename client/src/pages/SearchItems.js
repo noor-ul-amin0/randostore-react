@@ -1,44 +1,35 @@
 import { useHistory } from "react-router";
 import queryString from "query-string";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../redux/features/cart/cartSlice";
-import { emptySearchableProducts } from "../redux/features/products/productSlice";
+// import { useDispatch } from "react-redux";
+// import { addCartItem } from "../redux/features/cart/cartSlice";
 
 const SearchItems = () => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const {searchableProducts} = useSelector(state=>state.product)
-  const dispatch=useDispatch()
   const history = useHistory();
   // Get Query String from uri
   const { searchTerm } = queryString.parse(history.location.search);
-  useEffect(() => {
-    setFilteredProducts(searchableProducts);
-  }, [searchableProducts]);
+
   // Sort Items by Price
   const sortBy = (s) => {
-    let sortedResult = [];
-    switch (s) {
-      case "price":
-        sortedResult = filteredProducts.sort((a, b) => +a.price - +b.price);
-        setFilteredProducts([...sortedResult]);
-        return;
-
-      case "-price":
-        sortedResult = filteredProducts.sort((a, b) => +b.price - +a.price);
-        setFilteredProducts([...sortedResult]);
-        return;
-
-      default:
-        return setFilteredProducts([...filteredProducts]);
-    }
+    //   let sortedResult = [];
+    //   switch (s) {
+    //     case "price":
+    //       sortedResult = filteredProducts.sort((a, b) => +a.price - +b.price);
+    //       setFilteredProducts([...sortedResult]);
+    //       return;
+    //     case "-price":
+    //       sortedResult = filteredProducts.sort((a, b) => +b.price - +a.price);
+    //       setFilteredProducts([...sortedResult]);
+    //       return;
+    //     default:
+    //       return setFilteredProducts([...filteredProducts]);
+    //   }
   };
   return (
     <div className="container mt-5 mb-3">
-      {!filteredProducts.length && (
+      {![].length && (
         <p className="alert alert-warning">{`YOUR SEARCH '${searchTerm}' DID NOT MATCH TO ANY RESULT.`}</p>
       )}
-      {filteredProducts.length ? (
+      {[].length ? (
         <div className="dropdown" style={{ float: "right" }}>
           <button
             className="btn btn-secondary dropdown-toggle"
@@ -60,7 +51,7 @@ const SearchItems = () => {
         </div>
       ) : null}
 
-      {filteredProducts.map((product) => (
+      {[].map((product) => (
         <div
           key={product.id}
           className="card mb-3"
@@ -86,7 +77,7 @@ const SearchItems = () => {
                 </h6>
                 <button
                   type="button"
-                  onClick={() => dispatch(addCartItem(product))}
+                  // onClick={() => dispatch(addCartItem(product))}
                   className="btn btn-success"
                 >
                   ADD TO CART

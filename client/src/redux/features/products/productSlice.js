@@ -1,31 +1,49 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { addProduct, fetchProducts } from "./thunk";
+import { toast } from "react-toastify";
+
+export const productsAdapter = createEntityAdapter();
+const initialState = productsAdapter.getInitialState({
+  loading: false,
+});
 
 export const productSlice = createSlice({
-  name: 'product',
-  initialState: {
-    items:  [] ,
-    searchableProducts : []
+  name: "products",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(
+        fetchProducts.pending,
+        (state, action) => void (state.loading = true)
+      )
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        productsAdapter.setAll(state, action.payload);
+        state.loading = false;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        toastify("error", action.error.message);
+      })
+      .addCase(addProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        productsAdapter.addOne(state, action.payload);
+        state.loading = false;
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        toastify("error", action.error.message);
+      });
   },
-  reducers: {
-    getItems:(state,action)=>{
-        state.items=action.payload
-    },
-    addItem: (state,action) => {
-      state.items = [...state.items,action.payload]
-    },
-   searchProducts:(state,action)=>{
-    state.searchableProducts = state.items.filter((item) =>
-    action.payload.length >= 3
-      ? item.name
-          .toLocaleLowerCase()
-          .includes(action.payload.toLocaleLowerCase())
-      : item.name.toLocaleLowerCase() === action.payload.toLocaleLowerCase()
-  ) || []
-   },
-  },
-})
-
+});
+function toastify(state = "error", message = "Something Went Wrong!") {
+  toast[state](message, {
+    position: toast.POSITION.TOP_CENTER,
+  });
+}
 // Action creators are generated for each case reducer function
-export const { addItem , getItems, searchProducts, emptySearchableProducts} = productSlice.actions
+// export const {} = productSlice.actions;
 
-export default productSlice.reducer
+export default productSlice.reducer;

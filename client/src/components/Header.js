@@ -1,32 +1,33 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { searchProducts } from "../redux/features/products/productSlice";
 const Header = () => {
-  const {cartItems} = useSelector(state=>state.cart)
-  const dispatch=useDispatch()
+  const { cartItems } = useSelector((state) => state.cart);
   const history = useHistory();
   const [currentTab, setCurrentTab] = useState();
   const [searchTerm, setSearchTerm] = useState("");
-  const tabs= [
+  const tabs = [
     { id: 0, name: "Home", navigateTo: "/" },
     { id: 3, name: "Counter", navigateTo: "/counter" },
     { id: 1, name: "Sale-Item", navigateTo: "/sale-items" },
     { id: 2, name: "Checkout", navigateTo: "/checkout" },
-  ]
+  ];
   useEffect(() => {
     if (history.location.pathname === "/") setCurrentTab(0);
     else if (history.location.pathname === "/sale-items") setCurrentTab(1);
     else if (history.location.pathname === "/checkout") setCurrentTab(2);
     else setCurrentTab(0);
   }, [history.location.pathname]);
-  const totalCartItems = () =>
-    cartItems.length
-      ? cartItems.reduce(
-          (accumalatedQuantity, cart) => accumalatedQuantity + cart.quantity,
-          0
-        )
-      : 0;
+  const totalCartItems = useMemo(
+    () =>
+      cartItems.length
+        ? cartItems.reduce(
+            (accumalatedQuantity, cart) => accumalatedQuantity + cart.quantity,
+            0
+          )
+        : 0,
+    [cartItems]
+  );
 
   return (
     <>
@@ -79,8 +80,9 @@ const Header = () => {
                 const value = searchTerm;
                 setSearchTerm("");
                 if (value) {
-                  dispatch(searchProducts(value))
-                  history.push(`/search-items?searchTerm=${value}`)};
+                  // dispatch(searchProducts(value))
+                  history.push(`/search-items?searchTerm=${value}`);
+                }
               }}
               style={{ marginRight: "380px" }}
             >
@@ -118,7 +120,7 @@ const Header = () => {
                 }}
                 className="badge"
               >
-                {totalCartItems()}
+                {totalCartItems}
               </span>
             </div>
           </div>

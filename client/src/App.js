@@ -6,9 +6,9 @@ import AddProduct from "./pages/AddProduct";
 import CheckoutPage from "./pages/Checkout";
 import SearchItems from "./pages/SearchItems";
 import { Counter } from "./components/Counter";
+import { ToastContainer, Flip } from "react-toastify";
 import "./App.css";
 const App = () => {
-
   return (
     <div className="page-container">
       <div className="content-wrap">
@@ -16,14 +16,13 @@ const App = () => {
           <Header />
           <Switch>
             <Route exact path="/">
-              <HomePage  />
+              <HomePage />
             </Route>
             <Route path="/sale-items">
               <AddProduct />
             </Route>
             <Route path="/checkout">
-              <CheckoutPage
-              />
+              <CheckoutPage />
             </Route>
             <Route path="/search-items">
               <SearchItems />
@@ -35,6 +34,17 @@ const App = () => {
         </Router>
       </div>
       <Footer />
+      <ToastContainer
+        autoClose={3000}
+        transition={Flip}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };
