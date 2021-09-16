@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProductIds } from "../redux/features/products/selectors";
 import { fetchProducts } from "../redux/features/products/thunk";
@@ -8,15 +8,9 @@ const ProductList = () => {
   const productIds = useSelector(selectProductIds);
   const { loading } = useSelector((state) => state.product);
 
-  const getProducts = useCallback(() => {
-    dispatch(fetchProducts());
-  }, []);
-
   useEffect(() => {
-    // getProducts();
-    console.log("Productlist mounted.");
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   const Loader = () => {
     if (loading)
@@ -40,9 +34,13 @@ const ProductList = () => {
       {Loader()}
       <div className="container mt-5 mb-3">
         <div className="row row-cols-1 row-cols-md-3 g-4">
-          {productIds.map((id) => (
-            <ProductListItem id={id} key={id} />
-          ))}
+          {productIds.length > 0 ? (
+            productIds.map((id) => <ProductListItem id={id} key={id} />)
+          ) : (
+            <div className="text-center">
+              <h3>No products found.</h3>
+            </div>
+          )}
         </div>
       </div>
     </>

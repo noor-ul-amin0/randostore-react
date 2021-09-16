@@ -1,10 +1,8 @@
-var express = require("express");
-var router = express.Router();
-var _ = require("lodash");
-var logger = require("../lib/logger");
-var log = logger();
-var items = require("../init_data.json").data;
-var curId = _.size(items);
+const express = require("express");
+const router = express.Router();
+const _ = require("lodash");
+const items = require("../init_data.json").data;
+const curId = _.size(items);
 
 /* GET items listing. */
 router.get("/", function (req, res) {
@@ -17,7 +15,7 @@ router.post("/", function (req, res) {
   curId += 1;
   item.id = curId;
   items[item.id] = item;
-  log.info("Created item", item);
+  // log.info("Created item", item);
   res.json(item);
 });
 
@@ -35,7 +33,7 @@ router.delete("/:id", function (req, res) {
   var item = items[req.params.id];
   delete items[req.params.id];
   res.status(204);
-  log.info("Deleted item", item);
+  // log.info("Deleted item", item);
   res.json(item);
 });
 
@@ -46,7 +44,7 @@ router.put("/:id", function (req, res, next) {
     return next(new Error("ID paramter does not match body"));
   }
   items[item.id] = item;
-  log.info("Updating item", item);
+  // log.info("Updating item", item);
   res.json(item);
 });
 

@@ -8,7 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "http://localhost:8080";
 const persistor = persistStore(store);
 ReactDOM.render(
   <React.StrictMode>
